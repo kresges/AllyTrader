@@ -2,6 +2,7 @@ import requests
 from requests_oauthlib import OAuth1
 import json
 
+from ally_api import AllyAPI
 from secrets import CONSUMER_KEY, CONSUMER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET
 
 BASE_URL = 'https://api.tradeking.com/v1/'
@@ -16,7 +17,9 @@ def testAPI():
 
 def main():
     print("AllyTradeAPI!")
-    testAPI()
+    #testAPI()
+    allyAPI = AllyAPI()
+    print(allyAPI.get_user())
 
 if __name__ == '__main__':
     main()
