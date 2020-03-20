@@ -5,6 +5,9 @@ import json
 import requests
 from requests_oauthlib import OAuth1
 
+from .brokerage_info import build_option_chain_info
+from .http_utils import check_http_status, attempt_json_decode
+
 from .secrets import CONSUMER_KEY, CONSUMER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET
 from .brokerage_interface import BrokerageInterface
 
@@ -25,6 +28,7 @@ class AllyAPI(BrokerageInterface):
         '''
         self.user = "spencer"
         self.auth = OAuth1(CONSUMER_KEY, CONSUMER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+        #self.info_builder = InfoBuilder()
         if(getInfo == True): self._get_account_number()
 
     def _get_account_number(self):
@@ -56,10 +60,15 @@ class AllyAPI(BrokerageInterface):
         else:
             return None
     
+    @build_option_chain_info
     def get_option_chain(self, ticker):
         '''
         '''
+        val = None
         payload = {'symbol':ticker, 'query':'strikeprice-eq:250 AND xdate-eq:20200327 AND put_call:call'}
-        return requests.get(OPTION_CHAIN_URL, auth=self.auth, params=payload).json()['response']
+        res = requests.get(OPTION_CHAIN_URL, auth=self.auth, params=payload)
+        if( check_http_status(res) ):
+            val = attempt_json_decode(res)
+        return val
 
     
