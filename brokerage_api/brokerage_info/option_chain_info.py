@@ -21,6 +21,13 @@ class OptionChainInfo(InfoInterface):
             rep += "{} : \n {}\n".format(key, val)
         return rep
 
+    def filter_quotes_by_volume(self, volume):
+        res = []
+        for idx, quote in self.quotes.items():
+            if int(quote.vl) >= volume:
+                res.append(quote)
+        return res
+
     def get_type(self):
         '''
         '''

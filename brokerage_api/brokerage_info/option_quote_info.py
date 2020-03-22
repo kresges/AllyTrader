@@ -9,6 +9,7 @@ class OptionQuoteInfo(InfoInterface):
         '''
         self.ask = None
         self.bid = None
+        self.vl = None
         self.contract_size = None
         self.days_to_expiration = None
         self.last = None
