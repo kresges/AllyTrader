@@ -65,7 +65,7 @@ class AllyAPI(BrokerageInterface):
         '''
         '''
         val = None
-        payload = {'symbol':ticker, 'query':'strikeprice-eq:250 AND xdate-eq:20200327 AND put_call:call'}
+        payload = {'symbol':ticker, 'query':'strikeprice-gt:250 AND xdate-eq:20200327 AND put_call:call'}
         res = requests.get(OPTION_CHAIN_URL, auth=self.auth, params=payload)
         if( check_http_status(res) ):
             val = attempt_json_decode(res)
